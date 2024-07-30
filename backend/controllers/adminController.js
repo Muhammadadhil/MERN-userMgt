@@ -20,13 +20,18 @@ export const adminLogin = asyncHandler(async (req,res) => {
         res.status(400).json({message:'incorrect email or password'})    
     }
 
-
 }); 
 
 
 export const getUsers=asyncHandler(async (req,res)=>{
     const users=await User.find({});
-    res.status(200).json(users);
+    if(users){
+        res.status(200).json(users);
+    }else{
+        res.status(400).json({message:'Error in fetching user details'});
+    }
 })
+
+
 
 

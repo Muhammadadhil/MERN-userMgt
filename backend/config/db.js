@@ -6,7 +6,7 @@ const connnectDB=async ()=>{
         
         console.log(`MongoDB Connected: ${conn.connection.host} port:${conn.connection.port}`);
     } catch (error) {
-        console.error(`Error:${error.message}`);
+        console.error(`MongoDB Connection Error:${error.message}`);
         process.exit(1);
     }
 }

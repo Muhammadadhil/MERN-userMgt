@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import FormContainer from "../../components/FormContainer";
 import { useNavigate } from "react-router-dom";
-import { setCredentials } from "../../store/slices/authSlice";
+import { setCredentials , logout} from "../../store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useUpdateUserMutation } from "../../store/slices/userApiSlice";
+import { useLogoutMutation, useUpdateUserMutation } from "../../store/slices/userApiSlice";
 import Loader from "../../components/Loader";
+
 
 const ProfileScreen = () => {
     const [name, setName] = useState("");
@@ -14,35 +15,44 @@ const ProfileScreen = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const navigate = useNavigate();
+    
+    const { userInfo } = useSelector((state) => state.auth);
+    const [logoutApiCall]=useLogoutMutation();
     const dispatch = useDispatch();
 
-    const { userInfo } = useSelector((state) => state.auth);
-
-    const [updateProfile,{isLoading}]=useUpdateUserMutation();
+    const [updateProfile, { isLoading }] = useUpdateUserMutation();
 
     useEffect(() => {
         setName(userInfo.name);
         setEmail(userInfo.email);
-
-    }, [userInfo.name,userInfo.email]);
+    }, [userInfo.name, userInfo.email]);
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        if (password != confirmPassword) {
+        if (password != confirmPassword) { 
             toast.error("password does not match");
         } else {
             try {
-              const response = await updateProfile({
-                _id:userInfo._id,
-                name,
-                email,
-                password
-              }).unwrap();
-              dispatch(setCredentials({ ...response }));
-              navigate('/')
-              toast.success('profile updated ')
+                const response = await updateProfile({
+                    _id: userInfo._id,
+                    name,
+                    email,
+                    password,
+                }).unwrap();
+
+                dispatch(setCredentials({ ...response }));
+                navigate("/");
+                toast.success("profile updated ");
             } catch (error) {
-              toast.error(error?.data?.message)
+                console.log(error);
+                if(error.status == 401){
+                    dispatch(logout());
+                    await logoutApiCall()
+                    toast.error("Session expired. Please log in again.");
+                    navigate("/login");
+                }else{
+                    toast.error(error?.data?.message);
+                }
             }
         }
     };

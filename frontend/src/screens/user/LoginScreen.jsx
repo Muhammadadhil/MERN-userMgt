@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 
 const LoginScreen = () => {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -27,11 +26,10 @@ const LoginScreen = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        if(!email && !password){
-            toast.error('fill email and password fields');
-            return 
+        if (!email && !password) {
+            toast.error("fill email and password fields");
+            return;
         }
-
         try {
             const res = await login({ email, password }).unwrap();
             dispatch(setCredentials({ ...res }));
@@ -41,9 +39,11 @@ const LoginScreen = () => {
         }
     };
 
+    if (isLoading) {
+        return <Loader />;
+    }
     return (
         <div>
-            {isLoading && <Loader />}
             <FormContainer>
                 <h1 className="text-2xl font-bold mb-5  text-center">Sign In</h1>
                 <form onSubmit={submitHandler}>

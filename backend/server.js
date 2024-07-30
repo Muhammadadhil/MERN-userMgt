@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js'
 import adminRoutes from './routes/adminRoutes.js';
-import { notFound } from './middleware/errorMiddleware.js';
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import connnectDB from './config/db.js';
 import cookieParser from 'cookie-parser';
 dotenv.config();
@@ -22,7 +22,7 @@ app.use('/api/admin', adminRoutes);
 app.get('/',(req,res)=> res.send('server is ready'));
 
 app.use(notFound);
-// app.use(errorHandler);
+app.use(errorHandler);
 
 app.listen(port,()=> console.log(`server is running on the port ${port}`))
 

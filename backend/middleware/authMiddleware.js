@@ -22,33 +22,33 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 }) ;
 
-const protectAdmin=asyncHandler(async (req,res,next)=>{
-    let token=req.cookies.jwt;
+// const protectAdmin=asyncHandler(async (req,res,next)=>{
+//     let token=req.cookies.jwt;
 
-    if(token){
-        try {
-            const decoded=jwt.verify(token,process.env.JWT_SECRET);
-            console.log('jwt decoded:',decoded);
+//     if(token){
+//         try {
+//             const decoded=jwt.verify(token,process.env.JWT_SECRET);
+//             console.log('jwt decoded:',decoded);
             
 
-            // next();
-        } catch (error) {
-            res.status(402);
-            throw new Error('not authorised, no token')
-        }
+//             // next();
+//         } catch (error) {
+//             res.status(402);
+//             throw new Error('not authorised, no token')
+//         }
 
-    }else{
-        res.status(401);
-        throw new Error('not authorised , no token');
-    }
-    console.log('protect admin mid!!');
-    // if(req.user ){
+//     }else{
+//         res.status(401);
+//         throw new Error('not authorised , no token');
+//     }
+//     console.log('protect admin mid!!');
+//     // if(req.user ){
         
-    //     next();
-    // }else{
-    //     res.status(401)
-    //     throw new Error('not an admin')
-    // }
-})
+//     //     next();
+//     // }else{
+//     //     res.status(401)
+//     //     throw new Error('not an admin')
+//     // }
+// })
 
-export { protect, protectAdmin };
+export { protect};
