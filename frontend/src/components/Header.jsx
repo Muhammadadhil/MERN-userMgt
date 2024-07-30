@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useLogoutMutation } from "../store/slices/userApiSlice";
 import { logout } from "../store/slices/authSlice";
+import { toast } from "react-toastify";
 
 
 
@@ -27,6 +28,7 @@ const Header = () => {
             await logoutAPiCall().unwrap(); //unwrap -to access the raw result of a fulfilled or rejected promise from an API call.
             dispatch(logout());
             navigate("/");
+            toast('logout successfully')
         } catch (error) {
             console.log(error);
         }

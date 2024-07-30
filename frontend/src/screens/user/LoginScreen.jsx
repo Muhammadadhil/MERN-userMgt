@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { Link, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../store/slices/userApiSlice";
-import { setCredentials } from "../store/slices/authSlice";
+import { useLoginMutation } from "../../store/slices/userApiSlice";
+import { setCredentials } from "../../store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import Loader from "../components/Loader";
+import Loader from "../../components/Loader";
 
 const LoginScreen = () => {
 
@@ -27,6 +27,11 @@ const LoginScreen = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        if(!email && !password){
+            toast.error('fill email and password fields');
+            return 
+        }
+
         try {
             const res = await login({ email, password }).unwrap();
             dispatch(setCredentials({ ...res }));
