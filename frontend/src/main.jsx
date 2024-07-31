@@ -13,6 +13,12 @@ import PrivateRoute from './components/PrivateRoute.jsx'
 import AdminLogin from './screens/admin/AdminLogin.jsx';
 import AdminLayout from './screens/admin/AdminLayout.jsx';
 import AdminDashboard from './screens/admin/AdminDashboard.jsx'
+import AdminPrivateRoute from './components/AdminPrivateRoute.jsx'
+import AdminPublicRoute from './components/AdminPublicRoute.jsx'
+import EditUser from './screens/admin/EditUser.jsx'
+// import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
+import { PrimeReactProvider } from "primereact/api";
+        
 
 
 const router = createBrowserRouter(
@@ -29,8 +35,13 @@ const router = createBrowserRouter(
                 </Route>
             </Route>
             <Route element={<AdminLayout />}>
-                <Route path="/admin" element={<AdminLogin />} />
-                <Route path="/dashboard" element={<AdminDashboard />} />
+                <Route element={<AdminPublicRoute />}>
+                    <Route path="/admin" element={<AdminLogin />} />
+                </Route>
+                <Route path="" element={<AdminPrivateRoute />}>
+                    <Route path="/dashboard" element={<AdminDashboard />} />
+                    <Route path="/edituser/:id" element={< EditUser/>} />
+                </Route>
             </Route>
         </>
     )
@@ -41,8 +52,10 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
-        <React.StrictMode>
-            <RouterProvider router={router} />
-        </React.StrictMode>
+        <PrimeReactProvider>
+            <React.StrictMode>
+                <RouterProvider router={router} />
+            </React.StrictMode>
+        </PrimeReactProvider>
     </Provider>
 );

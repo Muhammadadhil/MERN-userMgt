@@ -3,12 +3,15 @@ import FormContainer from "../../components/FormContainer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { setAdminAuth } from "../../store/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 const AdminLogin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate(); 
+    const dispatch=useDispatch();
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -17,10 +20,10 @@ const AdminLogin = () => {
             toast.error("Please fill in both email and password.");
             return;
         }
-
         try {
             const response = await axios.post("/api/admin", { email, password });
-            console.log("axios res:", response);
+            console.log("admin login backend Res:", response);
+            dispatch(setAdminAuth());
             navigate("/dashboard");
         } catch (error) {
             console.log(error);

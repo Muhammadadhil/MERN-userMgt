@@ -7,7 +7,6 @@ import { logout } from "../store/slices/authSlice";
 import { toast } from "react-toastify";
 
 
-
 const Header = () => {
     const { userInfo } = useSelector((state) => state.auth);
 

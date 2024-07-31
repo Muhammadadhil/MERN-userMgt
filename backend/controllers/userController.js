@@ -81,6 +81,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
     
+    
     const user={
         _id:req.user._id,
         name:req.user.name,
