@@ -18,6 +18,7 @@ import AdminPublicRoute from './components/AdminPublicRoute.jsx'
 import EditUser from './screens/admin/EditUser.jsx'
 // import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
 import { PrimeReactProvider } from "primereact/api";
+import CreateUser from './screens/admin/CreateUser.jsx'
         
 
 
@@ -40,7 +41,8 @@ const router = createBrowserRouter(
                 </Route>
                 <Route path="" element={<AdminPrivateRoute />}>
                     <Route path="/dashboard" element={<AdminDashboard />} />
-                    <Route path="/edituser/:id" element={< EditUser/>} />
+                    <Route path="/edituser/:id" element={<EditUser />} />
+                    <Route path="/createUser" element={<CreateUser />} />
                 </Route>
             </Route>
         </>

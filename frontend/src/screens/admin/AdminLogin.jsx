@@ -22,7 +22,6 @@ const AdminLogin = () => {
         }
         try {
             const response = await axios.post("/api/admin", { email, password });
-            console.log("admin login backend Res:", response);
             dispatch(setAdminAuth());
             navigate("/dashboard");
         } catch (error) {

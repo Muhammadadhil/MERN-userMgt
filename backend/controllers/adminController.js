@@ -84,3 +84,31 @@ export const deleteUser=asyncHandler( async (req,res)=>{
 
 
 
+// route    Post /api/admin/createUser 
+// @access  Private
+export const createUser=asyncHandler( async (req,res)=>{
+   const {name,email,password}=req.body;
+   console.log(name, email, password);
+   const userExists = await User.findOne({ email: email });
+
+   if (userExists) {
+       res.status(400);
+       throw new Error("User already exists");
+   }
+
+   const user = await User.create({
+       name,
+       email,
+       password,
+   });
+
+   if (user) {
+       res.status(201).json({message:"created user succesfully"});
+   } else {
+       res.status(400);
+       throw new Error("invalid user data");
+   }
+})
+
+
+

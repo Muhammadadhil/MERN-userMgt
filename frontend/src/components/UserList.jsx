@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { logoutAdmin } from "../store/slices/authSlice";
 
 // import { ConfirmDialog } from 'primereact/confirmdialog'; // For <ConfirmDialog /> component
 // import { confirmDialog } from 'primereact/confirmdialog'; // For confirmDialog method
@@ -15,9 +17,20 @@ const UserList = () => {
         fetchUsers();
     }, []);
 
+    const dispatch=useDispatch();
+
     const fetchUsers = async () => {
-        const response = await axios.get("/api/admin/getUsers");
-        setUsersList(response.data);
+        try {
+            const response = await axios.get("/api/admin/getUsers");
+            setUsersList(response.data);
+        } catch (error) {
+            console.log('error:',error);
+            if(error.response.status==401){
+                dispatch(logoutAdmin());
+                navigate('/admin');
+            }
+            toast.error(error?.response?.data?.message);
+        }
     };
     const navigate = useNavigate();
 
