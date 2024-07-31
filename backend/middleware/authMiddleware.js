@@ -7,10 +7,9 @@ const protect = asyncHandler(async (req, res, next) => {
     token = req.cookies.jwt; // with the help of cookieparser
 
     if (token) {
-        try {   
+        try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.user = await User.findOne({ _id: decoded.userId }).select("-password");
-
             next();
         } catch (error) {
             res.status(401);
@@ -20,35 +19,29 @@ const protect = asyncHandler(async (req, res, next) => {
         res.status(401);
         throw new Error("not authorised, no token");
     }
-}) ;
+});
 
-// const protectAdmin=asyncHandler(async (req,res,next)=>{
-//     let token=req.cookies.jwt;
+const protectAdmin = asyncHandler(async (req, res, next) => {
+    let token = req.cookies.jwt;
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-//     if(token){
-//         try {
-//             const decoded=jwt.verify(token,process.env.JWT_SECRET);
-//             console.log('jwt decoded:',decoded);
-            
+            if (decoded.role !== "admin") {
+                throw new Error("not authorised");
+            } else {
+                req.user = decoded;
+                next();
+            }
 
-//             // next();
-//         } catch (error) {
-//             res.status(402);
-//             throw new Error('not authorised, no token')
-//         }
+        } catch (error) {
+            res.status(401);
+            throw new Error("not authorised , You are not an admin");
+        }
+    } else {
+        res.status(401);
+        throw new Error("not authorised , no token");
+    }
+});
 
-//     }else{
-//         res.status(401);
-//         throw new Error('not authorised , no token');
-//     }
-//     console.log('protect admin mid!!');
-//     // if(req.user ){
-        
-//     //     next();
-//     // }else{
-//     //     res.status(401)
-//     //     throw new Error('not an admin')
-//     // }
-// })
-
-export { protect};
+export { protect, protectAdmin };

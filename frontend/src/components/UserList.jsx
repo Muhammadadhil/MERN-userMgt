@@ -64,9 +64,9 @@ const UserList = () => {
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
                                     {usersList.length == 0 ? (
-                                        <div className="w-full h-96 flex items-center justify-center text-center">
-                                            <h1 className="text-2xl font-bold text-slate-700">no users to list</h1>
-                                        </div>
+                                        <tr className="w-full h-96 flex items-center justify-center text-center">
+                                            <td className="text-2xl font-bold text-slate-700">no users to list</td>
+                                        </tr>
                                     ) : (
                                         usersList
                                             .filter((user) => !user.isAdmin)

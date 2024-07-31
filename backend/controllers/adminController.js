@@ -64,9 +64,7 @@ export const getUserDetails=asyncHandler(async (req,res)=>{
 // @access  Private
 export const updateUserInfo=asyncHandler(async (req,res)=>{
     const {id,name,email}=req.body;
-    console.log(id,name,email);
     const updatedUser=await User.findOneAndUpdate({_id:id},{$set:{name,email}},{upsert:true});
-    console.log('updatedUser:',updatedUser);
     if(updatedUser){
         res.status(200).json({message:"success"});
     }else{
