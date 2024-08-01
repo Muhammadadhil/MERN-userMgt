@@ -17,17 +17,17 @@ const UserList = () => {
         fetchUsers();
     }, []);
 
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
 
     const fetchUsers = async () => {
         try {
             const response = await axios.get("/api/admin/getUsers");
             setUsersList(response.data);
         } catch (error) {
-            console.log('error:',error);
-            if(error.response.status==401){
+            console.log("error:", error);
+            if (error.response.status == 401) {
                 dispatch(logoutAdmin());
-                navigate('/admin');
+                navigate("/admin");
             }
             toast.error(error?.response?.data?.message);
         }
@@ -68,6 +68,9 @@ const UserList = () => {
                                             Name
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            profile
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Email
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -88,6 +91,9 @@ const UserList = () => {
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">{user._id}</td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.name}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <img className="w-20" src={user.profileImg} alt="profile img" />
+                                                    </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         <button

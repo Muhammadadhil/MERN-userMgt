@@ -9,9 +9,9 @@ const AdminDashboard=()=>{
                 <UserList />
             </div>
             <div>
-                {/* <Link to='/createUser'> */}
+                <Link to='/createUser'>
                     <button className="bg-black w-28 h-10 text-white rounded-md hover:bg-slate-800">Add User</button>
-                {/* </Link> */}
+                </Link>
             </div>
         </div>
     );

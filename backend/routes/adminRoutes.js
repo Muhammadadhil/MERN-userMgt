@@ -11,7 +11,7 @@ router.post("/logout", protectAdmin, logoutAdmin);
 router.get("/getUserInfo/:id", protectAdmin, getUserDetails);
 router.post("/updateUserInfo", protectAdmin, updateUserInfo);
 router.delete("/deleteuser/:id", protectAdmin, deleteUser);
-router.post("/logout", protectAdmin, createUser);
+router.post("/createUser", protectAdmin, createUser);
 
 
 export default router;

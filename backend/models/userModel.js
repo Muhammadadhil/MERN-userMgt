@@ -18,6 +18,9 @@ const userSchema = mongoose.Schema({
     isAdmin:{
         type:Boolean,
         default:false
+    },
+    profileImg:{
+        type:String,
     }
 },{
     timeStamps:true

@@ -17,7 +17,6 @@ const RegisterScreen = () => {
     const dispatch = useDispatch();
 
     const [register,{isLoading}]=useRegisterMutation();
-
     const { userInfo }=useSelector((state)=> state.auth)
 
     useEffect(()=>{
@@ -35,7 +34,6 @@ const RegisterScreen = () => {
                 const response =await register({name, email,password}).unwrap();
                 dispatch(setCredentials({...response}))
                 navigate('/');
-
             } catch (error) {
                 toast.error(error?.data?.message);
                 
@@ -48,7 +46,7 @@ const RegisterScreen = () => {
         <div>
             <FormContainer>
                 <h1 className="text-2xl font-bold mb-5  text-center">Sign Up</h1>
-
+               
                 <form onSubmit={submitHandler}>
                     <div className="mb-4">
                         <label htmlFor="name" className="block text-gray-700 mb-2">
@@ -104,6 +102,12 @@ const RegisterScreen = () => {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="confirmPassword" className="block text-gray-700 mb-2">
+                            Confirm Password
+                        </label>
+                        {/* <input type="file" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value={}  /> */}
                     </div>
 
                     <button type="submit" disabled={isLoading} className={`w-full py-2 bg-green-600 text-white rounded-lg mt-3 ${isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-green-700"}`}>

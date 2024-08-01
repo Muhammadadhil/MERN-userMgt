@@ -7,9 +7,9 @@ import { toast } from "react-toastify";
 
 const CreateUser = () => {
 
-    const [name,setName]=useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [name,setName]=useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const navigate=useNavigate();
     
@@ -20,13 +20,13 @@ const CreateUser = () => {
             toast.error("please fill the fields");
             return 
         }
-
         try {
             const res = await axios.post("/api/admin/createUser", { name, email, password });
             console.log(res);
             navigate('/dashboard');
         } catch (error) {
-            console.log(error);
+            toast.error(error?.response?.data?.message)
+            console.log('Error creating user:',error);
         }
     }
 
@@ -46,7 +46,7 @@ const CreateUser = () => {
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                           placeholder="Enter Name"
                           value={name}
-                          onChange={(e) => setName(e.target.value)}
+                          onChange={(e) => { console.log('fff');  setName(e.target.value)}}
                       />
                   </div>
 
